@@ -1,4 +1,5 @@
 <?php
+include "class/Category.php";
 
 class Product {
     private $id;
@@ -202,6 +203,20 @@ class Product {
         }
         return $product;
     }
+
+    public function getCategory() {
+        // Vérifie si l'ID de la catégorie est défini
+        if ($this->category_id) {
+            // Crée une nouvelle instance de la classe Category
+            $category = new Category();
+            // Utilise la méthode getCategoryById pour récupérer la catégorie associée
+            return $category->getId();
+        } else {
+            // Si l'ID de la catégorie n'est pas défini, retourne null
+            return null;
+        }
+    }
+    
     
     
     

@@ -13,11 +13,11 @@ class Category {
     private $updatedAt;
 
     public function __construct(
-        int $id,
-        string $name,
-        string $description,
-        DateTime $createdAt,
-        DateTime $updatedAt
+        int $id = 1,
+        string $name = "",
+        string $description = "",
+        DateTime $createdAt = new DateTime("2021-01-01"),
+        DateTime $updatedAt = new DateTime("2021-01-01")
     ) {
         $this -> id = $id;
         $this -> name = $name;
@@ -58,9 +58,7 @@ class Category {
         $this -> updatedAt = $updatedAt;
     }
 
-    public function __toString() {
-        return "Category: $this->id, $this->name, $this->description, $this->createdAt, $this->updatedAt";
-    }
+
 
     
 }

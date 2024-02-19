@@ -8,7 +8,14 @@ $product = new Product();
 // Récupération des produits depuis la base de données
 $products = $product->show_all_product();
 
-// var_dump($products);
+
+// Appel de la méthode getCategory() pour récupérer la catégorie associée au produit
+
+
+// Affichage des détails de la catégorie associée au produit avec l'ID 7
+echo $product->getCategory();
+
+var_dump($product->getCategory());
 if (isset($_POST['product_id'])) {
     $product_id = $_POST['product_id'];
 
@@ -23,7 +30,7 @@ if (isset($_POST['product_id'])) {
         echo "Price: " . $selected_product['price'] . "<br>";
         echo "Description: " . $selected_product['description'] . "<br>";
         echo "Quantity: " . $selected_product['quantity'] . "<br>";
-        echo "Category: " . $selected_product['category_id'] . "<br>";
+        echo "Category: " . $selected_product["category_id"] . "<br>";
         echo "Created At: " . $selected_product['createdAt'] . "<br>";
         echo "Updated At: " . $selected_product['updatedAt'] . "<br>";
 
@@ -33,6 +40,8 @@ if (isset($_POST['product_id'])) {
         echo "Produit non trouvé.";
     }
 }
+
+
 ?>
 <img src="<?php echo $selected_product["photos"] ?>"></img>
 
