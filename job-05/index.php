@@ -2,15 +2,18 @@
 include "class/Product.php";
 include "class/Category.php";
 
-// Instanciation d'un objet Product
 $product = new Product();
+
+// Instanciation d'un objet Category
+$category = new Category();
+
+// Récupération de toutes les catégories
+$categories = $product->getCategory2();
 
 // Récupération des produits depuis la base de données
 $products = $product->show_all_product();
 
 if (isset($_POST['product_id'])) {
-
-
     $product_id = $_POST['product_id'];
 
     // Récupération du produit par son ID
@@ -24,14 +27,9 @@ if (isset($_POST['product_id'])) {
         echo "Description: " . $selected_product['description'] . "<br>";
         echo "Quantity: " . $selected_product['quantity'] . "<br>";
 
-
-        $categoryData = $product->getCategory();
-        // Affichage du nom de la catégorie
-        if ($categoryData) {
-            echo "Category: " . $categoryData['name'] . "<br>";
-        } else {
-            echo "Category not found.<br>";
-        }
+        // Récupération du nom de la catégorie associée à ce produit
+        $category_name = $categories[$selected_product['category_id'] - 1]['name']; // Ajustement de l'index
+        echo "Category: " . $category_name . "<br>";
 
         echo "Created At: " . $selected_product['createdAt'] . "<br>";
         echo "Updated At: " . $selected_product['updatedAt'] . "<br>";
@@ -41,8 +39,6 @@ if (isset($_POST['product_id'])) {
         echo "Produit non trouvé.";
     }
 }
-var_dump($categoryData);
-
 
 ?>
 

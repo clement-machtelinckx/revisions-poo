@@ -22,7 +22,7 @@ class Product {
         float $price = 0.0,
         string $description = "",
         int $quantity = 0,
-        int $category_id = 1, // bug here need to be fix
+        int $category_id = 0, // bug here need to be fix
         DateTime $createdAt = new DateTime("2021-01-01"),
         DateTime $updatedAt = new DateTime("2021-01-01")
 
@@ -207,13 +207,36 @@ class Product {
     }
 
     public function getCategory() {
-        // Vérifie si l'ID de la catégorie est défini
-        $this->category_id;
-        var_dump($this->category_id);
-        $category = new Category();
-        var_dump($category);
-        return $category->getCategoryById($this->category_id);
+        return $this->category_id;
     }
 
+    public function getCategory2(){
+        $host = "localhost";
+        $db_name = "draft-shop";
+        $db_user = "clement";
+        $db_pass = "Clement2203$";
     
+        try {
+            // Connexion à la base de données avec PDO
+            $pdo = new PDO("mysql:host=$host;dbname=$db_name", $db_user, $db_pass);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+            // Préparation de la requête de sélection
+            $stmt = $pdo->prepare("SELECT * FROM category");
+    
+            // Exécution de la requête de sélection
+            $stmt->execute();
+    
+            // Récupération de toutes les catégories
+            $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+            return $categories;
+        } catch (PDOException $e) {
+            echo "Erreur de sélection : " . $e->getMessage();
+        }
+    }
+    
+
 }
+
+    
