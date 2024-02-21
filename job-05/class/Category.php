@@ -59,6 +59,42 @@ class Category {
     }
 
 
+    public function getCategoryById(int $id) {
+        $host = "localhost";
+        $db_name = "draft-shop";
+        $db_user = "clement";
+        $db_pass = "Clement2203$";
+    
+        try {
+            // Connexion à la base de données avec PDO
+            $pdo = new PDO("mysql:host=$host;dbname=$db_name", $db_user, $db_pass);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+            // Préparation de la requête de sélection
+            $stmt = $pdo->prepare("SELECT * FROM category WHERE id = :id");
+    
+            // Liaison des valeurs des paramètres
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    
+            // Exécution de la requête de sélection
+            $stmt->execute();
+    
+            // Récupération du produit
+            $category = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        } catch (PDOException $e) {
+            echo "Erreur de sélection : " . $e->getMessage();
+        }
+        return $category;
+    }
+
+    public function __toString() {
+        return "Id: " . $this -> id . "<br>" .
+        "Name: " . $this -> name . "<br>" .
+        "Description: " . $this -> description . "<br>" .
+        "Created At: " . $this -> createdAt -> format("Y-m-d H:i:s") . "<br>" .
+        "Updated At: " . $this -> updatedAt -> format("Y-m-d H:i:s") . "<br>";
+    }
 
     
 }

@@ -1,5 +1,5 @@
 <?php
-include "class/Category.php";
+// include "class/Category.php";
 
 class Product {
     private $id;
@@ -13,6 +13,8 @@ class Product {
     private $createdAt;
     private $updatedAt;
 
+
+
     public function __construct(
         int $id = 0,
         string $name = "",
@@ -20,7 +22,7 @@ class Product {
         float $price = 0.0,
         string $description = "",
         int $quantity = 0,
-        int $category_id = 0,
+        int $category_id = 1, // bug here need to be fix
         DateTime $createdAt = new DateTime("2021-01-01"),
         DateTime $updatedAt = new DateTime("2021-01-01")
 
@@ -206,19 +208,12 @@ class Product {
 
     public function getCategory() {
         // Vérifie si l'ID de la catégorie est défini
-        if ($this->category_id) {
-            // Crée une nouvelle instance de la classe Category
-            $category = new Category();
-            // Utilise la méthode getCategoryById pour récupérer la catégorie associée
-            return $category->getId();
-        } else {
-            // Si l'ID de la catégorie n'est pas défini, retourne null
-            return null;
-        }
+        $this->category_id;
+        var_dump($this->category_id);
+        $category = new Category();
+        var_dump($category);
+        return $category->getCategoryById($this->category_id);
     }
-    
-    
-    
-    
 
+    
 }

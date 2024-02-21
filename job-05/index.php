@@ -1,6 +1,6 @@
 <?php
-
-include "class/Product.php";    
+include "class/Product.php";
+include "class/Category.php";
 
 // Instanciation d'un objet Product
 $product = new Product();
@@ -8,15 +8,9 @@ $product = new Product();
 // Récupération des produits depuis la base de données
 $products = $product->show_all_product();
 
-
-// Appel de la méthode getCategory() pour récupérer la catégorie associée au produit
-
-
-// Affichage des détails de la catégorie associée au produit avec l'ID 7
-echo $product->getCategory();
-
-var_dump($product->getCategory());
 if (isset($_POST['product_id'])) {
+
+
     $product_id = $_POST['product_id'];
 
     // Récupération du produit par son ID
@@ -26,24 +20,31 @@ if (isset($_POST['product_id'])) {
     if ($selected_product) {
         echo "Id: " . $selected_product['id'] . "<br>";
         echo "Name: " . $selected_product['name'] . "<br>";
-
         echo "Price: " . $selected_product['price'] . "<br>";
         echo "Description: " . $selected_product['description'] . "<br>";
         echo "Quantity: " . $selected_product['quantity'] . "<br>";
-        echo "Category: " . $selected_product["category_id"] . "<br>";
+
+
+        $categoryData = $product->getCategory();
+        // Affichage du nom de la catégorie
+        if ($categoryData) {
+            echo "Category: " . $categoryData['name'] . "<br>";
+        } else {
+            echo "Category not found.<br>";
+        }
+
         echo "Created At: " . $selected_product['createdAt'] . "<br>";
         echo "Updated At: " . $selected_product['updatedAt'] . "<br>";
-
 
         // Afficher les autres détails du produit...
     } else {
         echo "Produit non trouvé.";
     }
 }
+var_dump($categoryData);
 
 
 ?>
-<img src="<?php echo $selected_product["photos"] ?>"></img>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -65,6 +66,22 @@ if (isset($_POST['product_id'])) {
     <button type="submit">Afficher le produit</button>
 </form>
 
+<?php if ($selected_product): ?>
+    <h1>Détails du produit sélectionné</h1>
+    <div>
+        <p>Id: <?php echo $selected_product['id']; ?></p>
+        <p>Name: <?php echo $selected_product['name']; ?></p>
+        <p>Price: <?php echo $selected_product['price']; ?></p>
+        <p>Description: <?php echo $selected_product['description']; ?></p>
+        <p>Quantity: <?php echo $selected_product['quantity']; ?></p>
+        <p>Category: <?php echo $selected_product['category_id']; ?></p>
+        <p>Created At: <?php echo $selected_product['createdAt']; ?></p>
+        <p>Updated At: <?php echo $selected_product['updatedAt']; ?></p>
+        <img src="<?php echo $selected_product["photos"]; ?>" alt="Product Photo">
+    </div>
+<?php endif; ?>
+
+<h1>Liste des produits</h1>
 <table class="table table-hover mt-4">
     <thead>
         <tr>
@@ -93,7 +110,6 @@ if (isset($_POST['product_id'])) {
         <?php endforeach; ?>
     </tbody>
 </table>
-
 
 </body>
 </html>
