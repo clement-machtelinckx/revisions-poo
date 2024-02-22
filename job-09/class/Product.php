@@ -235,6 +235,41 @@ class Product {
             echo "Erreur de sélection : " . $e->getMessage();
         }
     }
+
+    public function create() {
+        $host = "localhost";
+        $db_name = "draft-shop";
+        $db_user = "clement";
+        $db_pass = "Clement2203$";
+
+        try {
+            // Connexion à la base de données avec PDO
+            $pdo = new PDO("mysql:host=$host;dbname=$db_name", $db_user, $db_pass);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            // Préparation de la requête d'insertion
+            $stmt = $pdo->prepare("INSERT INTO product (name, photos, price, description, quantity, category_id, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+
+            // Extraction des données de l'objet Product
+            $name = $this->getName();
+            $photos = implode(',', $this->getPhotos());
+            $price = $this->getPrice();
+            $description = $this->getDescription();
+            $quantity = $this->getQuantity();
+            $category_id = $this->getCategoryId();
+            $createdAt = $this->getCreatedAt()->format('Y-m-d H:i:s');
+            $updatedAt = $this->getUpdatedAt()->format('Y-m-d H:i:s');
+
+            // Exécution de la requête d'insertion
+            $stmt->execute([$name, $photos, $price, $description, $quantity, $category_id, $createdAt, $updatedAt]);
+
+
+            echo "Données insérées avec succès !";
+            return $pdo->lastInsertId();
+        } catch (PDOException $e) {
+            echo "Erreur d'insertion : " . $e->getMessage();
+        }
+    }
     
 
 }

@@ -61,7 +61,8 @@ if (isset($_POST['product_id'])) {
     </select>
     <button type="submit">Afficher le produit</button>
 </form>
-<a href="category_select.php?category_id=<?php echo $selected_product["category_id"]; ?>">click here !!</a>
+<a href="category_select.php?category_id=<?php echo $selected_product["category_id"]; ?>">category selector !!</a>
+<a href="create_product.php">crée produit </a>
 
 
 <?php if ($selected_product): ?>
