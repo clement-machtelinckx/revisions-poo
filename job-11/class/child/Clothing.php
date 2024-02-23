@@ -1,12 +1,16 @@
 <?php
 
-include "c:/wamp64/www/revisions-poo/job-11/class/Product.php";
+include "../class/Product.php";
 
 class Clothing extends Product {
 
     private $size;
 
     private $color;
+
+    private $type;
+
+    private $material_fee;
 
     public function __construct(
         int $id = 0,
@@ -24,7 +28,7 @@ class Clothing extends Product {
         int $material_fee = 0)
 
     {
-        parent::__construct($id, $name, $price, $description, $quantity, $category_id, $createdAt, $updatedAt);
+        parent::__construct($id, $name, $photos, $price, $description, $quantity, $category_id, $createdAt, $updatedAt);
         $this -> size = $size;
         $this -> color = $color;
         $this -> type = $type;
@@ -63,7 +67,11 @@ class Clothing extends Product {
         $this -> material_fee = $material_fee;
     }
 
+    public function __toString(): string {
+        return "Clothing: " . parent::__toString() . " size: " . $this -> size . " color: " . $this -> color . " type: " . $this -> type . " material_fee: " . $this -> material_fee;
+    }
 
+    
 
 
 }

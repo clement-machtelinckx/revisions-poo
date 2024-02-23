@@ -1,12 +1,12 @@
 <?php
 
-
 include "../class/child/Clothing.php";
 
 $clothing = new Clothing(
     1,
     "T-shirt",
-    15.99,
+    ["https://picsum.photos/200/300"], // $photos
+    15.99, // $price
     "T-shirt en coton",
     100,
     1,
@@ -19,3 +19,5 @@ $clothing = new Clothing(
 );
 
 echo $clothing; 
+echo "<br>";
+var_dump($clothing);
